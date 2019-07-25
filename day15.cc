@@ -1,40 +1,28 @@
-//输入一个链表，输出该链表中倒数第k个结点。
-//
-//
-//
+//两个栈一个队列
 
 
-struct ListNode {
-	int val;
-	struct ListNode *next;
-	ListNode(int x) :
-			val(x), next(NULL) {
-	}
-};*/
-class Solution {
+class Solution
+{
 public:
-    ListNode* FindKthToTail(ListNode* pListHead, unsigned int k) {
-        int count = 0;
-        ListNode *temp = pListHead;
-        
-        while(temp != NULL)
-        {
-            ++count;
-            temp = temp -> next;
-        }
-        
-        count -= k;
-        temp = pListHead;
-        if(count >= 0)
-        {
-            while(count--)
-            {
-                temp = temp -> next;
-            }
-            return temp;
-        }
-        else 
-            return NULL;
+    void push(int node) {
+        stack1.push(node);
     }
-};
 
+    int pop() {  
+        if(stack2.empty())
+        {
+            while(!stack1.empty())
+            {
+                stack2.push(stack1.top());
+                stack1.pop();
+            }
+        }
+       int ret = stack2.top();
+       stack2.pop();
+       return ret;
+    }
+
+private:
+    stack<int> stack1;
+    stack<int> stack2;
+};
